@@ -1,4 +1,4 @@
-HELP.md
+RevPay/HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -32,3 +32,16 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/application.properties
+
+### Other ###
+*.properties
+*.iml
+target/
+dist/
+.idea/
+
+*.JAR
+*.WAR
+*.EAR
+
+*.class
