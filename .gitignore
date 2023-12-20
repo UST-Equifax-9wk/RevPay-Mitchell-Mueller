@@ -35,8 +35,6 @@ build/
 
 ### Other ###
 *.properties
-*.iml
-target/
 dist/
 .idea/
 
