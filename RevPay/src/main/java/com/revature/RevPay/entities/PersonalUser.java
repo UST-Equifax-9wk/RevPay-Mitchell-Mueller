@@ -1,6 +1,7 @@
 package com.revature.RevPay.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -33,13 +34,8 @@ public class PersonalUser {
     private String email;
     @Column(name = "phone_number")
     private String phoneNumber;
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "user_account",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "account_id") }
-    )
-    private Set<PersonalFinancialAccount> accounts;
+    @OneToOne(mappedBy = "user")
+    private PersonalFinancialAccount account;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -52,7 +48,7 @@ public class PersonalUser {
     public PersonalUser() {
     }
 
-    public PersonalUser(Integer userId, String firstName, String lastName, String username, String password, String email, String phoneNumber, Set<PersonalFinancialAccount> accounts) {
+    public PersonalUser(Integer userId, String firstName, String lastName, String username, String password, String email, String phoneNumber, PersonalFinancialAccount account) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,7 +56,7 @@ public class PersonalUser {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accounts = accounts;
+        this.account = account;
     }
 
     public PersonalUser(String username, String password, String email) {
@@ -73,22 +69,22 @@ public class PersonalUser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PersonalUser that)) return false;
-        return Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(accounts, that.accounts) && Objects.equals(addresses, that.addresses);
+        return Objects.equals(userId, that.userId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(account, that.account) && Objects.equals(addresses, that.addresses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, username, password, email, phoneNumber, accounts, addresses);
+        return Objects.hash(userId, firstName, lastName, username, password, email, phoneNumber, account, addresses);
     }
 
-    public PersonalUser(String firstName, String lastName, String username, String password, String email, String phoneNumber, Set<PersonalFinancialAccount> accounts) {
+    public PersonalUser(String firstName, String lastName, String username, String password, String email, String phoneNumber, PersonalFinancialAccount account) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accounts = accounts;
+        this.account = account;
     }
 
     public PersonalUser(Integer userId, String firstName, String lastName, String username, String password, String email, String phoneNumber) {
@@ -166,12 +162,12 @@ public class PersonalUser {
         this.password = password;
     }
 
-    public Set<PersonalFinancialAccount> getAccounts() {
-        return accounts;
+    public PersonalFinancialAccount getAccount() {
+        return account;
     }
 
-    public void setAccounts(Set<PersonalFinancialAccount> accounts) {
-        this.accounts = accounts;
+    public void setAccount(PersonalFinancialAccount account) {
+        this.account = account;
     }
 
     public Set<PersonalAddress> getAddresses() {

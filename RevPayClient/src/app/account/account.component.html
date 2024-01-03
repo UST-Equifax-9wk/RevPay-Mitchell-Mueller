@@ -1,0 +1,13 @@
+<p>account works!</p>
+<label>Account Number:</label>
+<input type="text" id="accountNumber" [(ngModel)]="accountNumber">
+<br>
+<label>Type:</label>
+<input type="text" id="type" [(ngModel)]="type">
+<br>
+<label>Balance:</label>
+<input type="text" id="balance" [(ngModel)]="balance">
+<br>
+<button (click)="submitAccount()" *ngIf="accountNumber != '' && type != ''">submit!</button>
+<hr>
+<a href="account">Add Account</a> | <a href="send">Send Money</a>

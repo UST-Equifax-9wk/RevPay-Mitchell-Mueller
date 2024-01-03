@@ -1,5 +1,6 @@
 package com.revature.RevPay.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -18,25 +19,26 @@ public class PersonalFinancialAccount {
     private String type;
     @Column(name = "balance", nullable = false)
     private Double balance;
-    @ManyToMany(mappedBy = "accounts")
-    private Set<PersonalUser> users;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private PersonalUser user;
 
     public PersonalFinancialAccount() {
     }
 
-    public PersonalFinancialAccount(Integer accountId, String accountNumber, String type, Double balance, Set<PersonalUser> users) {
+    public PersonalFinancialAccount(Integer accountId, String accountNumber, String type, Double balance, PersonalUser user) {
         this.accountId = accountId;
         this.accountNumber = accountNumber;
         this.type = type;
         this.balance = balance;
-        this.users = users;
+        this.user = user;
     }
 
-    public PersonalFinancialAccount(String accountNumber, String type, Double balance, Set<PersonalUser> users) {
+    public PersonalFinancialAccount(String accountNumber, String type, Double balance, PersonalUser user) {
         this.accountNumber = accountNumber;
         this.type = type;
         this.balance = balance;
-        this.users = users;
+        this.user = user;
     }
 
     public PersonalFinancialAccount(Integer accountId, String accountNumber, String type, Double balance) {
@@ -84,24 +86,24 @@ public class PersonalFinancialAccount {
         this.balance = balance;
     }
 
-    public Set<PersonalUser> getUsers() {
-        return users;
+    public PersonalUser getUser() {
+        return user;
     }
 
-    public void setUsers(Set<PersonalUser> users) {
-        this.users = users;
+    public void setUser(PersonalUser user) {
+        this.user = user;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PersonalFinancialAccount that)) return false;
-        return Objects.equals(accountId, that.accountId) && Objects.equals(accountNumber, that.accountNumber) && Objects.equals(type, that.type) && Objects.equals(balance, that.balance) && Objects.equals(users, that.users);
+        return Objects.equals(accountId, that.accountId) && Objects.equals(accountNumber, that.accountNumber) && Objects.equals(type, that.type) && Objects.equals(balance, that.balance) && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, accountNumber, type, balance, users);
+        return Objects.hash(accountId, accountNumber, type, balance, user);
     }
 
     @Override

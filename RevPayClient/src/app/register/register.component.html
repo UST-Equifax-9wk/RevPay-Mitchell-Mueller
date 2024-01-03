@@ -1,0 +1,12 @@
+<p>register works!</p>
+<br>
+<label>Email:</label>
+<input type="text" id="email" [(ngModel)]="email">
+<br>
+<label>Username:</label>
+<input type="text" id="username" [(ngModel)]="username">
+<br>
+<label>Password:</label>
+<input type="text" id="password" [(ngModel)]="password">
+<br>
+<button (click)="submitRegistration()" *ngIf="username != '' && password != ''">submit!</button>

@@ -1,0 +1,10 @@
+<p>send works!</p>
+<label>Target User:</label>
+<input type="text" id="target" [(ngModel)]="target">
+<br>
+<label>Amount:</label>
+<input type="text" id="amount" [(ngModel)]="amount">
+<br>
+<button (click)="submitSend()" *ngIf="target != ''">submit!</button>
+<hr>
+<a href="account">Add Account</a> | <a href="send">Send Money</a>
